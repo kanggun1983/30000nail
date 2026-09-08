@@ -174,7 +174,7 @@
                 <div class="text-center text-white mt-8 relative z-10">
                     <h1 class="text-2xl font-bold mb-2 tracking-tight drop-shadow-lg">3만네일 & 폰값연구소</h1>
                     
-                    <!-- 전화번호 & 영업시간 1줄 텍스트 (신규 추가) -->
+                    <!-- 전화번호 & 영업시간 1줄 텍스트 -->
                     <div class="flex justify-center items-center gap-2.5 text-[12px] sm:text-[13px] font-medium text-white/90 drop-shadow-md mb-5">
                         <span><i class="fas fa-phone-alt text-pink-300 mr-1"></i>010-1234-5678</span>
                         <span class="text-white/40">|</span>
@@ -206,8 +206,6 @@
             <div class="p-5 space-y-6">
                 <!-- 탭 1: 프로필 -->
                 <div id="tab-profile" class="tab-content active">
-                    
-                    <!-- 삭제된 기존 1번 박스(기본 정보) 자리 -->
 
                     <div class="mb-6">
                         <h3 class="text-[16px] font-bold text-gray-800 mb-3 px-1 flex items-center gap-2">
@@ -457,8 +455,17 @@
             }
         }
 
-        // 모달 기능
+        // ==========================================
+        // 뒤로가기(History API) 및 모달 상태 관리 로직
+        // ==========================================
+        let activeModal = null; // 현재 열려있는 모달 상태 ('alert' 또는 'gallery')
+
+        // 1. 커스텀 알림 모달
         function openModal(title, message) {
+            activeModal = 'alert';
+            // 스마트폰 뒤로가기 버튼을 감지하기 위해 가짜 방문 기록 1개 추가
+            history.pushState({ modal: "alert" }, null, "#alert");
+
             const modal = document.getElementById('customModal');
             const content = document.getElementById('modalContent');
             document.getElementById('modalTitle').innerText = title;
@@ -469,7 +476,8 @@
                 content.classList.remove('scale-95'); content.classList.add('scale-100');
             }, 10);
         }
-        function closeModal() {
+
+        function _closeAlertUI() {
             const modal = document.getElementById('customModal');
             const content = document.getElementById('modalContent');
             modal.classList.remove('opacity-100'); modal.classList.add('opacity-0');
@@ -477,8 +485,23 @@
             setTimeout(() => modal.classList.add('hidden'), 300);
         }
 
-        // 갤러리 팝업
+        function closeModal() {
+            if (activeModal === 'alert') {
+                activeModal = null;
+                _closeAlertUI();
+                // 확인 버튼을 눌러서 닫은 경우 쌓아둔 가짜 방문 기록을 삭제
+                if (window.location.hash === "#alert") {
+                    history.back();
+                }
+            }
+        }
+
+        // 2. 이미지 갤러리 (전단지) 모달
         function openGalleryModal(type) {
+            activeModal = 'gallery';
+            // 스마트폰 뒤로가기 버튼을 감지하기 위해 가짜 방문 기록 1개 추가
+            history.pushState({ modal: "gallery" }, null, "#gallery");
+
             const modal = document.getElementById('imageModal');
             const content = document.getElementById('imageModalContent');
             const container = document.getElementById('modalImageContainer');
@@ -518,7 +541,7 @@
             }, 10);
         }
 
-        function closeImageModal() {
+        function _closeGalleryUI() {
             const modal = document.getElementById('imageModal');
             const content = document.getElementById('imageModalContent');
             modal.classList.remove('opacity-100'); modal.classList.add('opacity-0');
@@ -529,9 +552,34 @@
             }, 300);
         }
 
+        function closeImageModal() {
+            if (activeModal === 'gallery') {
+                activeModal = null;
+                _closeGalleryUI();
+                // X 버튼이나 바깥쪽 화면을 눌러서 닫은 경우 쌓아둔 가짜 방문 기록 삭제
+                if (window.location.hash === "#gallery") {
+                    history.back();
+                }
+            }
+        }
+
+        // 3. 🚨 가장 중요한 핵심: 스마트폰 물리 뒤로가기 감지 센서
+        window.addEventListener("popstate", function(event) {
+            // 사용자가 스마트폰 뒤로가기를 눌렀을 때, 갤러리가 켜져있다면 앱 종료 대신 갤러리만 닫기!
+            if (activeModal === 'gallery') {
+                activeModal = null;
+                _closeGalleryUI(); // 이미 뒤로가기가 실행되었으므로 history.back()은 부르지 않음
+            } 
+            // 알림창이 켜져있었다면 알림창만 닫기!
+            else if (activeModal === 'alert') {
+                activeModal = null;
+                _closeAlertUI();
+            }
+        });
+
         // 공유 기능
         function shareProfile() {
-            const currentUrl = window.location.href;
+            const currentUrl = window.location.href.split('#')[0]; // 해시 주소 떼고 깔끔하게 복사
             const dummy = document.createElement('textarea');
             document.body.appendChild(dummy); dummy.value = currentUrl; dummy.select();
             document.execCommand('copy'); document.body.removeChild(dummy);
