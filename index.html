@@ -133,11 +133,11 @@
         <!-- 스크롤되는 메인 콘텐츠 (이 영역 안에서만 스크롤됨) -->
         <div class="flex-1 overflow-y-auto hide-scrollbar bg-bgGray relative">
             
-            <!-- 상단 헤더 (배경 이미지 적용 및 얼굴 삭제) -->
-            <div class="pt-10 pb-8 px-6 rounded-b-[2rem] relative z-0 bg-cover bg-center bg-[#d90479]" style="background-image: url('27088.jpg');">
+            <!-- 상단 헤더 (배경 이미지 짤림 방지: bg-contain 추가) -->
+            <div class="pt-10 pb-8 px-6 rounded-b-[2rem] relative z-0 bg-contain bg-center bg-no-repeat bg-[#d90479]" style="background-image: url('27088.jpg');">
                 
                 <!-- 가독성을 위해 어둡게 깔아주는 오버레이 -->
-                <div class="absolute inset-0 bg-black/50 rounded-b-[2rem] z-0"></div>
+                <div class="absolute inset-0 bg-black/60 rounded-b-[2rem] z-0"></div>
                 
                 <button onclick="shareProfile()" class="absolute top-4 right-5 text-white text-xl p-2 z-10 drop-shadow-md">
                     <i class="fas fa-share-nodes"></i>
@@ -171,7 +171,7 @@
                     </button>
                     
                     <!-- 배경 이미지가 있어도 글씨가 잘 보이도록 반투명 박스 처리 -->
-                    <div class="bg-black/30 rounded-2xl p-4 text-[13px] leading-relaxed backdrop-blur-md border border-white/20 shadow-inner">
+                    <div class="bg-black/40 rounded-2xl p-4 text-[13px] leading-relaxed backdrop-blur-md border border-white/20 shadow-inner">
                         "손끝의 아름다움과 최신 스마트폰의 만남.<br>
                         최고의 네일아트와 전국 최저가 휴대폰 시세로<br>
                         고객님께 진짜 이득이 되는 혜택만 선별하여<br>
@@ -424,10 +424,10 @@
     </div>
 
     <script>
-        // PWA Manifest 동적 생성 (독립 앱 설치 충돌 방지)
+        // PWA Manifest 동적 생성
         const iconUrl = new URL("27081.jpg", window.location.href).href;
         const manifestData = {
-            "id": "/3man-nail-phone-app-v4/", 
+            "id": "/3man-nail-phone-app-v5/", 
             "name": "3만네일 & 폰값연구소",
             "short_name": "3만네일&폰",
             "start_url": window.location.origin + window.location.pathname, 
@@ -479,7 +479,7 @@
             setTimeout(() => modal.classList.add('hidden'), 300);
         }
 
-        // 다중 이미지 (갤러리) 불러오기 기능 (자동 감지)
+        // 갤러리 팝업
         function openGalleryModal(type) {
             const modal = document.getElementById('imageModal');
             const content = document.getElementById('imageModalContent');
