@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <!-- 브라우저 캐시 완전 방지 (업데이트 즉시 반영) -->
+    <!-- 브라우저 캐시 완벽 방지 (업데이트 즉시 반영) -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -44,13 +44,13 @@
     </script>
 
     <style>
-        /* 핵심 1: 전체 화면의 스크롤 자체를 락(Lock) 걸어 바운스 현상 원천 차단 */
+        /* 화면 스크롤 바운스 원천 차단 (하단바 완벽 고정을 위함) */
         html, body {
             width: 100%;
-            height: 100dvh; /* 모바일 하단바 제외 실제 높이 꽉채움 */
+            height: 100dvh;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* 바디 스크롤 절대 불가 */
+            overflow: hidden; /* 전체 바디 스크롤 차단 */
             background-color: #e5e7eb;
             touch-action: pan-y;
             -webkit-font-smoothing: antialiased;
@@ -59,14 +59,14 @@
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* 핵심 2: 앱 컨테이너 플렉스 구조 - 위(스크롤영역) 아래(하단바) 완전 분리 */
+        /* 앱 컨테이너: 상단 스크롤 영역과 하단 고정 바를 분리하는 플렉스 구조 */
         .app-container {
             width: 100%;
             max-width: 420px;
             height: 100%;
             margin: 0 auto;
             background-color: #ffffff;
-            display: flex; /* 자식 요소를 블록처럼 상/하로 분리 배치 */
+            display: flex;
             flex-direction: column;
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
@@ -91,7 +91,7 @@
             }
             .pwa-safe-top {
                 padding-top: env(safe-area-inset-top);
-                background-color: #d90479;
+                background-color: #000000; /* 노치 배경색 */
             }
         }
 
@@ -103,7 +103,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 버튼 둥둥 떠다니는 애니메이션 */
+        /* 둥둥 떠다니는 버튼 애니메이션 */
         @keyframes floatLeft {
             0%, 100% { transform: translateY(0) rotate(-3deg); }
             50% { transform: translateY(-5px) rotate(-3deg); }
@@ -112,8 +112,8 @@
             0%, 100% { transform: translateY(0) rotate(3deg); }
             50% { transform: translateY(-5px) rotate(3deg); }
         }
-        .btn-float-left { animation: floatLeft 2s ease-in-out infinite; box-shadow: 0 4px 15px rgba(255, 255, 255, 0.4), inset 0 0 8px rgba(255, 255, 255, 0.5); }
-        .btn-float-right { animation: floatRight 2.2s ease-in-out infinite; box-shadow: 0 4px 15px rgba(255, 255, 255, 0.4), inset 0 0 8px rgba(255, 255, 255, 0.5); }
+        .btn-float-left { animation: floatLeft 2s ease-in-out infinite; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
+        .btn-float-right { animation: floatRight 2.2s ease-in-out infinite; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
         
         /* 손가락 통통 튀는 애니메이션 */
         @keyframes pointerBounce {
@@ -130,49 +130,48 @@
         <!-- PWA 노치 보호 영역 -->
         <div class="pwa-safe-top shrink-0"></div>
 
-        <!-- 스크롤되는 메인 콘텐츠 (여기에만 스크롤 허용) -->
+        <!-- 스크롤되는 메인 콘텐츠 (이 영역 안에서만 스크롤됨) -->
         <div class="flex-1 overflow-y-auto hide-scrollbar bg-bgGray relative">
             
-            <!-- 상단 헤더 -->
-            <div class="bg-primary pt-10 pb-8 px-6 rounded-b-[2rem] relative z-0">
-                <button onclick="shareProfile()" class="absolute top-4 right-5 text-white text-xl p-2">
+            <!-- 상단 헤더 (배경 이미지 적용 및 얼굴 삭제) -->
+            <div class="pt-10 pb-8 px-6 rounded-b-[2rem] relative z-0 bg-cover bg-center bg-[#d90479]" style="background-image: url('27088.jpg');">
+                
+                <!-- 가독성을 위해 어둡게 깔아주는 오버레이 -->
+                <div class="absolute inset-0 bg-black/50 rounded-b-[2rem] z-0"></div>
+                
+                <button onclick="shareProfile()" class="absolute top-4 right-5 text-white text-xl p-2 z-10 drop-shadow-md">
                     <i class="fas fa-share-nodes"></i>
                 </button>
 
-                <div class="relative flex justify-center items-center mt-2 mb-4">
+                <!-- 얼굴 이미지가 삭제되고 양쪽 버튼만 중앙으로 배치됨 -->
+                <div class="relative z-10 flex justify-center items-center mt-6 mb-8 gap-10">
                     
                     <!-- 1. 네일 이벤트 버튼 -->
-                    <button onclick="openGalleryModal('nail')" class="absolute left-0 bg-white/25 hover:bg-white/40 backdrop-blur-md rounded-xl p-2 text-center text-white border-2 border-white/60 transition-all z-10 w-[85px] btn-float-left active:scale-95 cursor-pointer relative">
-                        <span class="block text-xl mb-1 drop-shadow-md">🎉</span>
-                        <span class="font-bold tracking-tighter text-[11px] bg-black/20 px-1 py-0.5 rounded-md w-full inline-block">3만네일이벤트</span>
+                    <button onclick="openGalleryModal('nail')" class="bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-xl p-2.5 text-center text-white border border-white/50 transition-all w-[90px] btn-float-left active:scale-95 cursor-pointer relative">
+                        <span class="block text-2xl mb-1 drop-shadow-md">🎉</span>
+                        <span class="font-bold tracking-tighter text-[11px] bg-black/40 px-1 py-1 rounded-md w-full inline-block">3만네일이벤트</span>
                         <!-- 클릭 유도 손가락 아이콘 -->
-                        <div class="absolute -bottom-7 left-1/2 animate-pointer text-yellow-300 text-2xl drop-shadow-md pointer-events-none">👆</div>
+                        <div class="absolute -bottom-9 left-1/2 animate-pointer text-yellow-300 text-3xl drop-shadow-lg pointer-events-none">👆</div>
                     </button>
 
-                    <div class="relative z-20">
-                        <div class="w-24 h-24 rounded-full border-4 border-white overflow-hidden shadow-xl mx-auto bg-white flex items-center justify-center">
-                            <!-- 중앙 얼굴 사진 바꾸는 곳 -->
-                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop" alt="프로필" class="w-full h-full object-cover">
-                        </div>
-                    </div>
-
                     <!-- 2. 휴대폰 행사 버튼 -->
-                    <button onclick="openGalleryModal('mobile')" class="absolute right-0 bg-white/25 hover:bg-white/40 backdrop-blur-md rounded-xl p-2 text-center text-white border-2 border-white/60 transition-all z-10 w-[85px] btn-float-right active:scale-95 cursor-pointer relative">
-                        <span class="block text-xl mb-1 drop-shadow-md">📱</span>
-                        <span class="font-bold tracking-tighter text-[11px] bg-black/20 px-1 py-0.5 rounded-md w-full inline-block">휴대폰행사</span>
+                    <button onclick="openGalleryModal('mobile')" class="bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-xl p-2.5 text-center text-white border border-white/50 transition-all w-[90px] btn-float-right active:scale-95 cursor-pointer relative">
+                        <span class="block text-2xl mb-1 drop-shadow-md">📱</span>
+                        <span class="font-bold tracking-tighter text-[11px] bg-black/40 px-1 py-1 rounded-md w-full inline-block">휴대폰행사</span>
                         <!-- 클릭 유도 손가락 아이콘 -->
-                        <div class="absolute -bottom-7 left-1/2 animate-pointer text-yellow-300 text-2xl drop-shadow-md pointer-events-none">👆</div>
+                        <div class="absolute -bottom-9 left-1/2 animate-pointer text-yellow-300 text-3xl drop-shadow-lg pointer-events-none">👆</div>
                     </button>
                 </div>
 
-                <div class="text-center text-white mt-8">
-                    <h1 class="text-2xl font-bold mb-2 tracking-tight">3만네일 & 폰값연구소</h1>
+                <div class="text-center text-white mt-8 relative z-10">
+                    <h1 class="text-2xl font-bold mb-3 tracking-tight drop-shadow-lg">3만네일 & 폰값연구소</h1>
                     
-                    <button onclick="openModal('알림받기', '본점/평리점 이벤트 및 혜택 알림이 설정되었습니다.')" class="bg-secondary/90 hover:bg-secondary text-white text-xs font-bold px-4 py-2 rounded-full mb-4 shadow-md transition flex items-center justify-center mx-auto gap-1.5 border border-white/10">
-                        <i class="fas fa-bell text-yellow-300"></i> 본점/평리점 이벤트알림받기
+                    <button onclick="openModal('알림받기', '본점/평리점 이벤트 및 혜택 알림이 설정되었습니다.')" class="bg-primary hover:bg-[#b80066] text-white text-xs font-bold px-4 py-2.5 rounded-full mb-5 shadow-lg transition flex items-center justify-center mx-auto gap-1.5 border border-white/30">
+                        <i class="fas fa-bell text-yellow-300 animate-pulse"></i> 본점/평리점 이벤트알림받기
                     </button>
                     
-                    <div class="bg-white/10 rounded-2xl p-4 text-[13px] leading-relaxed backdrop-blur-sm border border-white/20 shadow-inner">
+                    <!-- 배경 이미지가 있어도 글씨가 잘 보이도록 반투명 박스 처리 -->
+                    <div class="bg-black/30 rounded-2xl p-4 text-[13px] leading-relaxed backdrop-blur-md border border-white/20 shadow-inner">
                         "손끝의 아름다움과 최신 스마트폰의 만남.<br>
                         최고의 네일아트와 전국 최저가 휴대폰 시세로<br>
                         고객님께 진짜 이득이 되는 혜택만 선별하여<br>
@@ -181,6 +180,7 @@
                 </div>
             </div>
 
+            <!-- 탭 메뉴 (스크롤 시 상단에 끈적하게 붙음) -->
             <div class="sticky top-0 bg-white shadow-sm z-30 flex justify-between border-b border-gray-200 text-[14px] font-medium text-gray-400">
                 <button onclick="switchTab('tab-profile')" id="btn-tab-profile" class="tab-btn flex-1 py-3.5 text-center text-primary border-b-2 border-primary font-bold transition">프로필</button>
                 <button onclick="switchTab('tab-nail')" id="btn-tab-nail" class="tab-btn flex-1 py-3.5 text-center border-b-2 border-transparent hover:text-gray-700 transition">네일/가격</button>
@@ -354,50 +354,50 @@
             </div> <!-- p-5 space-y-6 끝 -->
         </div> <!-- flex-1 메인 콘텐츠 끝 -->
 
-        <!-- 하단 바 영역 (화면 하단에 벽돌처럼 완전히 분리되어 고정됨) -->
+        <!-- 하단 고정 바 (스크롤과 완전히 분리되어 바닥에 고정됨) -->
         <div class="shrink-0 bg-white border-t border-gray-200 px-2 py-3 pb-safe z-40 sm:rounded-b-[2rem] shadow-[0_-10px_20px_rgba(0,0,0,0.05)]" style="padding-bottom: max(env(safe-area-inset-bottom), 16px);">
             <div class="flex justify-between items-center max-w-sm mx-auto gap-1">
                 
-                <!-- 1. 본점 당근 -->
-                <button onclick="openExternalLink('https://www.daangn.com/kr/local-profile/mxjgwgvp5uyc/?referrer=share')" class="flex flex-col items-center w-1/4 transition group bg-transparent border-0 p-0 m-0 cursor-pointer">
+                <!-- 1. 본점 당근 (a 태그 적용으로 뒤로가기 완벽 지원) -->
+                <a href="https://www.daangn.com/kr/local-profile/mxjgwgvp5uyc/?referrer=share" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-1/4 transition group text-center no-underline">
                     <div class="w-[46px] h-[46px] rounded-2xl bg-white border border-gray-200 shadow-sm flex justify-center items-center text-[#ff8a3d] group-hover:bg-orange-50 transition mb-1">
                         <i class="fas fa-carrot text-xl"></i>
                     </div>
                     <span class="text-[10px] text-gray-400 leading-tight mt-0.5">3만네일</span>
                     <span class="text-[11px] font-bold text-gray-700 leading-tight">본점 당근</span>
-                </button>
+                </a>
                 
                 <!-- 2. 평리점 당근 -->
-                <button onclick="openExternalLink('https://www.daangn.com/kr/local-profile/v2zi5n3qrbms/?referrer=share')" class="flex flex-col items-center w-1/4 transition group bg-transparent border-0 p-0 m-0 cursor-pointer">
+                <a href="https://www.daangn.com/kr/local-profile/v2zi5n3qrbms/?referrer=share" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-1/4 transition group text-center no-underline">
                     <div class="w-[46px] h-[46px] rounded-2xl bg-white border border-gray-200 shadow-sm flex justify-center items-center text-[#ff8a3d] group-hover:bg-orange-50 transition mb-1">
                         <i class="fas fa-carrot text-xl"></i>
                     </div>
                     <span class="text-[10px] text-gray-400 leading-tight mt-0.5">3만네일</span>
                     <span class="text-[11px] font-bold text-gray-700 leading-tight">평리점 당근</span>
-                </button>
+                </a>
                 
                 <!-- 3. 본점 카카오채널 -->
-                <button onclick="openExternalLink('https://pf.kakao.com/_xoaeQn')" class="flex flex-col items-center w-1/4 transition group bg-transparent border-0 p-0 m-0 cursor-pointer">
+                <a href="https://pf.kakao.com/_xoaeQn" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-1/4 transition group text-center no-underline">
                     <div class="w-[46px] h-[46px] rounded-2xl bg-[#FEE500] border border-[#FEE500] shadow-sm flex justify-center items-center text-[#3A1D1D] group-hover:bg-[#FDD800] transition mb-1">
                         <i class="fas fa-comment text-xl"></i>
                     </div>
                     <span class="text-[10px] text-gray-400 leading-tight mt-0.5">폰값연구소</span>
                     <span class="text-[11px] font-bold text-gray-700 leading-tight">본점 채널</span>
-                </button>
+                </a>
 
                 <!-- 4. 평리점 카카오채널 -->
-                <button onclick="openExternalLink('https://pf.kakao.com/_LRMxgn')" class="flex flex-col items-center w-1/4 transition group bg-transparent border-0 p-0 m-0 cursor-pointer">
+                <a href="https://pf.kakao.com/_LRMxgn" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-1/4 transition group text-center no-underline">
                     <div class="w-[46px] h-[46px] rounded-2xl bg-[#FEE500] border border-[#FEE500] shadow-sm flex justify-center items-center text-[#3A1D1D] group-hover:bg-[#FDD800] transition mb-1">
                         <i class="fas fa-comment text-xl"></i>
                     </div>
                     <span class="text-[10px] text-gray-400 leading-tight mt-0.5">폰값연구소</span>
                     <span class="text-[11px] font-bold text-gray-700 leading-tight">평리점 채널</span>
-                </button>
+                </a>
 
             </div>
         </div>
 
-        <!-- 커스텀 모달 -->
+        <!-- 알림 커스텀 모달 -->
         <div id="customModal" class="absolute inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
             <div id="modalContent" class="bg-white rounded-2xl p-6 w-[80%] max-w-[300px] text-center shadow-2xl transform scale-95 transition-transform duration-300">
                 <div class="text-primary text-4xl mb-4"><i class="fas fa-check-circle"></i></div>
@@ -415,9 +415,8 @@
                     <i class="fas fa-times"></i>
                 </button>
                 
-                <!-- 자바스크립트가 여기에 event1~10 (또는 11~20) 이미지를 자동으로 채웁니다 -->
                 <div id="modalImageContainer" class="bg-transparent rounded-2xl overflow-y-auto hide-scrollbar flex flex-col items-center max-h-[85vh] space-y-4 pb-10 pt-2 px-2 w-full">
-                    <!-- Images will be injected here -->
+                    <!-- 자바스크립트가 여기에 event1~10 (또는 11~20) 이미지를 자동으로 채웁니다 -->
                 </div>
 
             </div>
@@ -425,10 +424,10 @@
     </div>
 
     <script>
-        // PWA Manifest 동적 생성
+        // PWA Manifest 동적 생성 (독립 앱 설치 충돌 방지)
         const iconUrl = new URL("27081.jpg", window.location.href).href;
         const manifestData = {
-            "id": "/3man-nail-phone-app-fixed/", 
+            "id": "/3man-nail-phone-app-v4/", 
             "name": "3만네일 & 폰값연구소",
             "short_name": "3만네일&폰",
             "start_url": window.location.origin + window.location.pathname, 
@@ -444,11 +443,6 @@
         const blob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
         const manifestURL = URL.createObjectURL(blob);
         document.head.insertAdjacentHTML('beforeend', `<link rel="manifest" href="${manifestURL}">`);
-
-        // 외부 링크 강제 새 창 열기 (뒤로가기 완벽 호환)
-        function openExternalLink(url) {
-            window.open(url, '_blank', 'noopener,noreferrer');
-        }
 
         // 탭 기능
         function switchTab(tabId) {
@@ -485,16 +479,14 @@
             setTimeout(() => modal.classList.add('hidden'), 300);
         }
 
-        // 다중 이미지 (갤러리) 불러오기 기능 (JPG -> PNG 자동 변환 및 에러 숨김 처리)
+        // 다중 이미지 (갤러리) 불러오기 기능 (자동 감지)
         function openGalleryModal(type) {
             const modal = document.getElementById('imageModal');
             const content = document.getElementById('imageModalContent');
             const container = document.getElementById('modalImageContainer');
             
-            // 기존 이미지 초기화
             container.innerHTML = ''; 
 
-            // 번호 범위 설정 (네일 1~10, 휴대폰 11~20)
             let startIdx = (type === 'nail') ? 1 : 11;
             let endIdx = (type === 'nail') ? 10 : 20;
 
@@ -503,33 +495,24 @@
                 img.className = "w-full h-auto rounded-xl shadow-lg";
                 img.alt = `행사 이미지 ${i}`;
                 
-                // 처음엔 숨겨둠 (에러나는 엑스박스 안보이게)
                 img.style.display = 'none';
-
-                // 먼저 JPG 파일을 시도
                 img.src = `event${i}.jpg`;
 
-                // 로딩 실패 처리 (JPG -> PNG -> 아예 숨김)
                 img.onerror = function() {
-                    // 현재 src가 jpg로 끝난다면 (즉, jpg 로딩에 실패했다면)
                     if (this.src.indexOf('.jpg') !== -1) {
-                        // 확장자를 png로 바꿔서 다시 시도
                         this.src = `event${i}.png`;
                     } else {
-                        // png마저 실패했다면 (파일이 없으면) 해당 칸 아예 삭제
                         this.remove();
                     }
                 };
 
-                // 로딩 성공 처리
                 img.onload = function() {
-                    this.style.display = 'block'; // 정상 로딩되면 화면에 보여줌
+                    this.style.display = 'block';
                 };
 
                 container.appendChild(img);
             }
             
-            // 모달 띄우기
             modal.classList.remove('hidden');
             setTimeout(() => {
                 modal.classList.remove('opacity-0'); modal.classList.add('opacity-100');
@@ -537,7 +520,6 @@
             }, 10);
         }
 
-        // 이미지 모달 닫기
         function closeImageModal() {
             const modal = document.getElementById('imageModal');
             const content = document.getElementById('imageModalContent');
