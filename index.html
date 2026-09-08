@@ -16,6 +16,7 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="3만네일 & 폰값연구소">
     <meta property="og:description" content="최고의 네일아트와 전국 최저가 휴대폰 시세로 진짜 이득이 되는 혜택만 선별했습니다.">
+    <!-- 캐시 무력화를 위해 이미지 주소 뒤에 파라미터 추가 가능 -->
     <meta property="og:image" content="https://kanggun1983.github.io/27088.jpg">
     
     <!-- iOS 사파리용 앱 모드 설정 -->
@@ -144,7 +145,7 @@
             <div class="pt-10 pb-8 px-6 rounded-b-[2rem] relative z-0 bg-contain bg-center bg-no-repeat bg-[#d90479]" style="background-image: url('27088.jpg');">
                 
                 <!-- 가독성을 위해 어둡게 깔아주는 오버레이 -->
-                <div class="absolute inset-0 bg-black/60 rounded-b-[2rem] z-0"></div>
+                <div class="absolute inset-0 bg-black/70 rounded-b-[2rem] z-0"></div>
                 
                 <button onclick="shareProfile()" class="absolute top-4 right-5 text-white text-xl p-2 z-10 drop-shadow-md">
                     <i class="fas fa-share-nodes"></i>
@@ -171,8 +172,15 @@
                 </div>
 
                 <div class="text-center text-white mt-8 relative z-10">
-                    <h1 class="text-2xl font-bold mb-3 tracking-tight drop-shadow-lg">3만네일 & 폰값연구소</h1>
+                    <h1 class="text-2xl font-bold mb-2 tracking-tight drop-shadow-lg">3만네일 & 폰값연구소</h1>
                     
+                    <!-- 전화번호 & 영업시간 1줄 텍스트 (신규 추가) -->
+                    <div class="flex justify-center items-center gap-2.5 text-[12px] sm:text-[13px] font-medium text-white/90 drop-shadow-md mb-5">
+                        <span><i class="fas fa-phone-alt text-pink-300 mr-1"></i>010-1234-5678</span>
+                        <span class="text-white/40">|</span>
+                        <span><i class="fas fa-clock text-pink-300 mr-1"></i>10:00 - 20:00 (연중무휴)</span>
+                    </div>
+
                     <button onclick="openModal('알림받기', '본점/평리점 이벤트 및 혜택 알림이 설정되었습니다.')" class="bg-primary hover:bg-[#b80066] text-white text-xs font-bold px-4 py-2.5 rounded-full mb-5 shadow-lg transition flex items-center justify-center mx-auto gap-1.5 border border-white/30">
                         <i class="fas fa-bell text-yellow-300 animate-pulse"></i> 본점/평리점 이벤트알림받기
                     </button>
@@ -198,26 +206,9 @@
             <div class="p-5 space-y-6">
                 <!-- 탭 1: 프로필 -->
                 <div id="tab-profile" class="tab-content active">
-                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 space-y-4">
-                        <div class="flex items-center text-[15px]">
-                            <div class="w-8 flex justify-center text-primary"><i class="fas fa-phone-alt"></i></div>
-                            <div class="w-20 text-gray-500 text-sm">대표전화</div>
-                            <div class="font-bold text-gray-800">010-1234-5678</div>
-                        </div>
-                        <div class="flex items-center text-[15px]">
-                            <div class="w-8 flex justify-center text-primary"><i class="fas fa-store"></i></div>
-                            <div class="w-20 text-gray-500 text-sm">운영형태</div>
-                            <div class="font-bold text-gray-800">네일 & 폰값연구소</div>
-                        </div>
-                        <div class="flex items-center text-[15px]">
-                            <div class="w-8 flex justify-center text-primary"><i class="fas fa-clock"></i></div>
-                            <div class="w-20 text-gray-500 text-sm">영업시간</div>
-                            <div class="font-bold text-gray-800">10:00 - 20:00 (연중무휴)</div>
-                        </div>
-                    </div>
-
-                    <hr class="border-gray-200 my-6">
                     
+                    <!-- 삭제된 기존 1번 박스(기본 정보) 자리 -->
+
                     <div class="mb-6">
                         <h3 class="text-[16px] font-bold text-gray-800 mb-3 px-1 flex items-center gap-2">
                             <span class="text-primary"><i class="fas fa-store"></i></span> 3만네일 본점
