@@ -144,11 +144,11 @@
         <!-- 메인 스크롤 영역 (이 부분만 스크롤됨) -->
         <div class="flex-1 overflow-y-auto overscroll-y-contain hide-scrollbar bg-bgGray relative" id="main-scroll-area">
             
-            <!-- 상단 헤더 간판 배경 -->
+            <!-- 상단 헤더 간판 배경 (bg-cover 대신 bg-[length:100%_auto] 적용하여 사진 확대 방지) -->
             <div class="pt-10 pb-8 px-5 relative z-0 bg-[length:100%_auto] bg-top bg-no-repeat" style="background-image: url('27088.jpg');">
                 
-                <!-- 연핑크 그라데이션 오버레이 (사진 중앙은 선명하게, 위아래는 핑크빛 배경과 자연스럽게 연결) -->
-                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-pink-50/50 to-[#fff5f7] z-0"></div>
+                <!-- 연핑크 그라데이션 오버레이 (뿌연 블러 효과 완벽 제거, 자연스러운 핑크 그라데이션) -->
+                <div class="absolute inset-0 bg-gradient-to-b from-pink-100/40 via-pink-50/30 to-[#fff5f7] z-0"></div>
                 
                 <div class="relative z-10 flex flex-col items-center mt-2">
                     
@@ -156,7 +156,7 @@
                         <i class="fas fa-share-nodes"></i>
                     </button>
 
-                    <!-- 행사 버튼 (지그재그, 네온 효과, 삐뚤어짐) -->
+                    <!-- 행사 버튼 (지그재그, 네온 효과, 삐뚤어짐 복구) -->
                     <div class="flex justify-center gap-8 w-full mb-11 mt-4">
                         <!-- 왼쪽 버튼 (\ 방향 기울임, 핑크 네온) -->
                         <div class="relative animate-btn-bounce" style="animation-delay: 0s; --rot: -4deg;">
@@ -586,10 +586,11 @@
                 dateTitle.innerText = `${month}월 ${date}일 휴대폰 시세표`;
             }
 
-            if (!window.location.hash || window.location.hash === "#tab-profile") {
-                history.replaceState({ tab: 'tab-profile' }, null, "#tab-profile");
+            // 해시 충돌 방지를 위해 슬래시(/)를 넣은 고유 주소 사용 (스크롤 튕김 완벽 차단)
+            if (!window.location.hash || window.location.hash === "#/tab-profile" || window.location.hash === "#tab-profile") {
+                history.replaceState({ tab: 'tab-profile' }, null, "#/tab-profile");
             } else {
-                const hashTab = window.location.hash.replace('#', '');
+                const hashTab = window.location.hash.replace('#/', '').replace('#', '');
                 if(document.getElementById(hashTab)) {
                     switchTab(hashTab, false);
                 }
@@ -644,7 +645,8 @@
             }
 
             if (pushHistory) {
-                history.pushState({ tab: tabId }, null, "#" + tabId);
+                // 브라우저 튕김 방지를 위해 앞에 / 추가
+                history.pushState({ tab: tabId }, null, "#/" + tabId);
             }
             
             // 탭 전환 시 화면 위로 튕기지 않게 현재 스크롤 위치 강제 유지
@@ -660,7 +662,7 @@
         // 알림 모달
         function openModal(title, message) {
             activeModal = 'alert';
-            history.pushState({ modal: "alert" }, null, "#alert");
+            history.pushState({ modal: "alert" }, null, "#/alert");
 
             const modal = document.getElementById('customModal');
             const content = document.getElementById('modalContent');
@@ -686,14 +688,14 @@
             if (activeModal === 'alert') {
                 activeModal = null;
                 _closeAlertUI();
-                if (window.location.hash === "#alert") history.back();
+                if (window.location.hash.includes("alert")) history.back();
             }
         }
 
         // 갤러리 이미지 모달
         function openGalleryModal(type) {
             activeModal = 'gallery';
-            history.pushState({ modal: "gallery" }, null, "#gallery");
+            history.pushState({ modal: "gallery" }, null, "#/gallery");
 
             const modal = document.getElementById('imageModal');
             const content = document.getElementById('imageModalContent');
@@ -749,7 +751,7 @@
             if (activeModal === 'gallery') {
                 activeModal = null;
                 _closeGalleryUI();
-                if (window.location.hash === "#gallery") history.back();
+                if (window.location.hash.includes("gallery")) history.back();
             }
         }
 
