@@ -16,8 +16,8 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="3만네일 & 폰값연구소">
     <meta property="og:description" content="최고의 네일아트와 전국 최저가 휴대폰 시세로 진짜 이득이 되는 혜택만 선별했습니다.">
-    <!-- 캐시 문제 방지를 위해 가장 기본 형태로 복구 -->
-    <meta property="og:image" content="https://kanggun1983.github.io/27088.jpg">
+    <!-- 카카오톡 캐시 강제 새로고침을 위한 꼬리표 추가 (?v=new) -->
+    <meta property="og:image" content="https://kanggun1983.github.io/27088.jpg?v=new">
     
     <!-- iOS 사파리용 앱 모드 설정 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -124,8 +124,8 @@
 
         /* 통통 튀는 버튼 및 손가락 애니메이션 */
         @keyframes buttonBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
+            0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+            50% { transform: translateY(-6px) rotate(var(--rot, 0deg)); }
         }
         .animate-btn-bounce { animation: buttonBounce 1.5s ease-in-out infinite; }
         
@@ -147,8 +147,8 @@
             <!-- 상단 헤더 간판 배경 -->
             <div class="pt-10 pb-8 px-5 relative z-0 bg-contain bg-top bg-no-repeat bg-white" style="background-image: url('27088.jpg');">
                 
-                <!-- 상단 파스텔 핑크 오버레이 (뿌연 블러 효과 완벽 제거 및 투명도 낮춤 -> 간판 선명하게 노출) -->
-                <div class="absolute inset-0 bg-gradient-to-b from-pink-400/20 via-pink-100/10 to-pink-50/80 z-0"></div>
+                <!-- 상단 파스텔 핑크 오버레이 (위는 핑크, 아래는 살짝 투명 / 블러 완전 제거) -->
+                <div class="absolute inset-0 bg-gradient-to-b from-pink-100/90 via-white/40 to-transparent z-0"></div>
                 
                 <div class="relative z-10 flex flex-col items-center mt-2">
                     
@@ -158,8 +158,8 @@
 
                     <div class="flex justify-center gap-8 w-full mb-11 mt-4">
                         <!-- 왼쪽 버튼 (\ 방향 기울임, 핑크 네온) -->
-                        <div class="relative animate-btn-bounce" style="animation-delay: 0s;">
-                            <button onclick="openGalleryModal('nail')" class="bg-white/95 backdrop-blur-md rounded-2xl p-2.5 px-3.5 text-center text-gray-800 shadow-[0_0_18px_rgba(244,114,182,0.9)] border-2 border-pink-400 -rotate-3 transition-all active:scale-95 flex flex-col items-center w-[100px]">
+                        <div class="relative animate-btn-bounce" style="animation-delay: 0s; --rot: -3deg;">
+                            <button onclick="openGalleryModal('nail')" class="bg-white/95 backdrop-blur-md rounded-2xl p-2.5 px-3.5 text-center text-gray-800 shadow-[0_0_18px_rgba(244,114,182,0.9)] border-2 border-pink-400 transition-all active:scale-95 flex flex-col items-center w-[100px]">
                                 <span class="block text-[28px] mb-1 drop-shadow-sm">🎉</span>
                                 <span class="font-bold tracking-tighter text-[11.5px] text-primary w-full whitespace-nowrap">3만네일이벤트</span>
                             </button>
@@ -167,8 +167,8 @@
                         </div>
 
                         <!-- 오른쪽 버튼 (/ 방향 기울임, 블루 네온) -->
-                        <div class="relative animate-btn-bounce" style="animation-delay: 0.15s;">
-                            <button onclick="openGalleryModal('mobile')" class="bg-white/95 backdrop-blur-md rounded-2xl p-2.5 px-3.5 text-center text-gray-800 shadow-[0_0_18px_rgba(96,165,250,0.9)] border-2 border-blue-400 rotate-3 transition-all active:scale-95 flex flex-col items-center w-[100px]">
+                        <div class="relative animate-btn-bounce" style="animation-delay: 0.15s; --rot: 3deg;">
+                            <button onclick="openGalleryModal('mobile')" class="bg-white/95 backdrop-blur-md rounded-2xl p-2.5 px-3.5 text-center text-gray-800 shadow-[0_0_18px_rgba(96,165,250,0.9)] border-2 border-blue-400 transition-all active:scale-95 flex flex-col items-center w-[100px]">
                                 <span class="block text-[28px] mb-1 drop-shadow-sm">📱</span>
                                 <span class="font-bold tracking-tighter text-[11.5px] text-blue-600 w-full whitespace-nowrap">휴대폰행사</span>
                             </button>
@@ -219,15 +219,15 @@
                     
                     <!-- 지점 선택 토글 버튼 -->
                     <div class="flex bg-pink-50 rounded-full p-1 mb-6 shadow-inner border border-pink-100">
-                        <button onclick="switchBranch('main')" id="btn-branch-main" class="flex-1 py-2 rounded-full text-[14px] font-bold bg-white text-primary shadow-sm transition active:scale-95">본점</button>
-                        <button onclick="switchBranch('pyeongni')" id="btn-branch-pyeongni" class="flex-1 py-2 rounded-full text-[14px] font-bold text-gray-500 hover:text-gray-800 transition active:scale-95">평리점</button>
+                        <button onclick="switchBranch('main')" id="btn-branch-main" class="flex-1 py-2 rounded-full text-[14px] font-bold bg-white text-primary shadow-sm transition active:scale-95">3만네일 본점</button>
+                        <button onclick="switchBranch('pyeongni')" id="btn-branch-pyeongni" class="flex-1 py-2 rounded-full text-[14px] font-bold text-gray-500 hover:text-gray-800 transition active:scale-95">3만네일 평리점</button>
                     </div>
 
                     <!-- ================= [본점 영역] ================= -->
                     <div id="branch-main" class="fade-in">
                         <div class="mb-6">
                             <h3 class="text-[16px] font-bold text-gray-800 mb-3 px-1 flex items-center gap-2">
-                                <span class="text-primary"><i class="fas fa-store"></i></span> 3만네일 본점 선생님
+                                <span class="text-primary"><i class="fas fa-store"></i></span> 본점 선생님
                             </h3>
                             <div class="grid grid-cols-2 gap-3">
                                 <!-- 본점 선생님 8명 -->
@@ -299,7 +299,7 @@
                         
                         <div class="mb-6">
                             <h3 class="text-[16px] font-bold text-gray-800 mb-3 px-1 flex items-center gap-2">
-                                <span class="text-blue-500"><i class="fas fa-mobile-alt"></i></span> 본점 폰값연구소 컨설턴트
+                                <span class="text-blue-500"><i class="fas fa-mobile-alt"></i></span> 폰값연구소 본점 컨설턴트
                             </h3>
                             <div class="grid grid-cols-2 gap-3">
                                 <!-- 본점 컨설턴트 2명 -->
@@ -330,7 +330,7 @@
                     <div id="branch-pyeongni" class="fade-in" style="display: none;">
                         <div class="mb-6">
                             <h3 class="text-[16px] font-bold text-gray-800 mb-3 px-1 flex items-center gap-2">
-                                <span class="text-primary"><i class="fas fa-store"></i></span> 3만네일 평리점 선생님
+                                <span class="text-primary"><i class="fas fa-store"></i></span> 평리점 선생님
                             </h3>
                             <div class="grid grid-cols-2 gap-3">
                                 <!-- 평리점 선생님 3명 -->
@@ -362,7 +362,7 @@
 
                         <div class="mb-6">
                             <h3 class="text-[16px] font-bold text-gray-800 mb-3 px-1 flex items-center gap-2">
-                                <span class="text-blue-500"><i class="fas fa-mobile-alt"></i></span> 평리점 폰값연구소 컨설턴트
+                                <span class="text-blue-500"><i class="fas fa-mobile-alt"></i></span> 폰값연구소 평리점 컨설턴트
                             </h3>
                             <div class="grid grid-cols-2 gap-3">
                                 <!-- 평리점 컨설턴트 2명 -->
@@ -432,7 +432,7 @@
 
                 <!-- 탭 3: 휴대폰행사 -->
                 <div id="tab-mobile" class="tab-content">
-                    <h3 id="mobile-date-title" class="text-[17px] font-bold text-gray-800 mb-4 px-1 mt-1">휴대폰 시세표</h3>
+                    <h3 id="mobile-date-title" class="text-[17px] font-bold text-gray-800 mb-4 px-1 -mt-1">오늘의 휴대폰 시세표</h3>
                     
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 mb-6">
                         <div class="flex justify-between items-center p-4 border-b border-gray-100">
