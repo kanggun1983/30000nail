@@ -17,7 +17,7 @@
     <meta property="og:title" content="3만네일 & 폰값연구소">
     <meta property="og:description" content="최고의 네일아트와 전국 최저가 휴대폰 시세로 진짜 이득이 되는 혜택만 선별했습니다.">
     <!-- 캐시 무력화를 위해 이미지 주소 뒤에 파라미터 추가 -->
-    <meta property="og:image" content="https://kanggun1983.github.io/27088.jpg?v=5">
+    <meta property="og:image" content="https://kanggun1983.github.io/27088.jpg?v=4">
     
     <!-- iOS 사파리용 앱 모드 설정 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -61,6 +61,7 @@
             overflow: hidden; /* 전체 바디 스크롤 차단 */
             background-color: #e5e7eb;
             touch-action: pan-y;
+            overscroll-behavior: none; /* 아이폰 화면 고무줄 현상(Bounce) 완벽 방지 */
             -webkit-font-smoothing: antialiased;
         }
         
@@ -99,7 +100,7 @@
             }
             .pwa-safe-top {
                 padding-top: env(safe-area-inset-top);
-                background-color: #000000;
+                background-color: #ffffff;
             }
         }
 
@@ -120,8 +121,8 @@
             0%, 100% { transform: translateY(0) rotate(3deg); }
             50% { transform: translateY(-5px) rotate(3deg); }
         }
-        .btn-float-left { animation: floatLeft 2s ease-in-out infinite; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
-        .btn-float-right { animation: floatRight 2.2s ease-in-out infinite; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
+        .btn-float-left { animation: floatLeft 2s ease-in-out infinite; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
+        .btn-float-right { animation: floatRight 2.2s ease-in-out infinite; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
         
         /* 손가락 통통 튀는 애니메이션 (좌우 중앙 정렬 포함) */
         @keyframes pointerBounce {
@@ -138,20 +139,20 @@
         <!-- PWA 노치 보호 영역 -->
         <div class="pwa-safe-top shrink-0"></div>
 
-        <!-- 스크롤되는 메인 콘텐츠 (이 영역 안에서만 스크롤됨) -->
-        <div class="flex-1 overflow-y-auto hide-scrollbar bg-bgGray relative">
+        <!-- 스크롤되는 메인 콘텐츠 (이 영역 안에서만 스크롤됨). overscroll-y-contain 추가로 바운스 제어 -->
+        <div class="flex-1 overflow-y-auto overscroll-y-contain hide-scrollbar bg-bgGray relative">
             
-            <!-- 상단 헤더 (배경 간판 이미지 + 오버레이) -->
-            <div class="pt-8 pb-8 px-6 relative z-0 bg-contain bg-center bg-no-repeat bg-[#2a0818]" style="background-image: url('27088.jpg');">
+            <!-- 상단 헤더 (배경 간판 이미지 + 화사한 반투명 화이트 오버레이) -->
+            <div class="pt-8 pb-8 px-6 relative z-0 bg-contain bg-center bg-no-repeat bg-gray-100" style="background-image: url('27088.jpg');">
                 
-                <!-- 가독성을 위해 어둡게 깔아주는 오버레이 (사진이 너무 밝아서 진하게 조정) -->
-                <div class="absolute inset-0 bg-black/80 z-0"></div>
+                <!-- 하얀색 덮개를 옅게 조정하여 원본 이미지가 더 잘 보이도록 수정 (bg-white/50) -->
+                <div class="absolute inset-0 bg-white/50 backdrop-blur-[1px] z-0"></div>
                 
                 <!-- 내부 콘텐츠 래퍼 -->
                 <div class="relative z-10 flex flex-col items-center">
                     
                     <!-- 공유 버튼 -->
-                    <button onclick="shareProfile()" class="absolute -top-4 -right-2 text-white text-xl p-2 z-10 drop-shadow-md">
+                    <button onclick="shareProfile()" class="absolute -top-4 -right-2 text-gray-600 hover:text-primary text-xl p-2 z-10 drop-shadow-md transition">
                         <i class="fas fa-share-nodes"></i>
                     </button>
 
@@ -159,42 +160,42 @@
                     <div class="flex justify-center gap-12 w-full mt-2 mb-10">
                         <!-- 네일 이벤트 버튼 -->
                         <div class="relative">
-                            <button onclick="openGalleryModal('nail')" class="bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-xl p-2.5 text-center text-white border border-white/50 transition-all w-[90px] btn-float-left active:scale-95 cursor-pointer">
-                                <span class="block text-2xl mb-1 drop-shadow-md">🎉</span>
-                                <span class="font-bold tracking-tighter text-[11px] bg-black/40 px-1 py-1 rounded-md w-full inline-block">3만네일이벤트</span>
+                            <button onclick="openGalleryModal('nail')" class="bg-white/90 hover:bg-white backdrop-blur-md rounded-xl p-2.5 text-center text-gray-800 border border-pink-200 transition-all w-[90px] btn-float-left active:scale-95 cursor-pointer">
+                                <span class="block text-2xl mb-1 drop-shadow-sm">🎉</span>
+                                <span class="font-bold tracking-tighter text-[11px] bg-pink-50 text-primary px-1 py-1 rounded-md w-full inline-block">3만네일이벤트</span>
                             </button>
                             <!-- 클릭 유도 손가락 아이콘 -->
-                            <div class="absolute -bottom-9 left-1/2 animate-pointer text-yellow-300 text-3xl drop-shadow-lg pointer-events-none">👆</div>
+                            <div class="absolute -bottom-9 left-1/2 animate-pointer text-yellow-400 text-3xl drop-shadow-md pointer-events-none">👆</div>
                         </div>
 
                         <!-- 휴대폰 행사 버튼 -->
                         <div class="relative">
-                            <button onclick="openGalleryModal('mobile')" class="bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-xl p-2.5 text-center text-white border border-white/50 transition-all w-[90px] btn-float-right active:scale-95 cursor-pointer">
-                                <span class="block text-2xl mb-1 drop-shadow-md">📱</span>
-                                <span class="font-bold tracking-tighter text-[11px] bg-black/40 px-1 py-1 rounded-md w-full inline-block">휴대폰행사</span>
+                            <button onclick="openGalleryModal('mobile')" class="bg-white/90 hover:bg-white backdrop-blur-md rounded-xl p-2.5 text-center text-gray-800 border border-gray-200 transition-all w-[90px] btn-float-right active:scale-95 cursor-pointer">
+                                <span class="block text-2xl mb-1 drop-shadow-sm">📱</span>
+                                <span class="font-bold tracking-tighter text-[11px] bg-gray-100 text-gray-700 px-1 py-1 rounded-md w-full inline-block">휴대폰행사</span>
                             </button>
                             <!-- 클릭 유도 손가락 아이콘 -->
-                            <div class="absolute -bottom-9 left-1/2 animate-pointer text-yellow-300 text-3xl drop-shadow-lg pointer-events-none">👆</div>
+                            <div class="absolute -bottom-9 left-1/2 animate-pointer text-yellow-400 text-3xl drop-shadow-md pointer-events-none">👆</div>
                         </div>
                     </div>
 
-                    <!-- 2. 메인 타이틀 복구 -->
-                    <h1 class="text-[22px] font-bold text-white mb-3 tracking-tight drop-shadow-md">3만네일 & 폰값연구소</h1>
+                    <!-- 2. 메인 타이틀 -->
+                    <h1 class="text-[22px] font-black text-gray-900 mb-3 tracking-tight drop-shadow-md">3만네일 & 폰값연구소</h1>
 
                     <!-- 3. 전화번호 및 영업시간 1줄 통합 -->
-                    <div class="text-[13px] text-white/90 font-medium tracking-wide mb-4 flex items-center justify-center gap-2 drop-shadow-md">
-                        <span class="flex items-center gap-1.5"><i class="fas fa-phone-alt text-pink-400"></i> 010-1234-5678</span>
-                        <span class="opacity-40 text-[10px]">|</span>
-                        <span class="flex items-center gap-1.5"><i class="fas fa-clock text-pink-400"></i> 10:00 - 20:00 (연중무휴)</span>
+                    <div class="text-[13px] text-gray-800 font-bold tracking-wide mb-4 flex items-center justify-center gap-2 drop-shadow-md">
+                        <span class="flex items-center gap-1.5"><i class="fas fa-phone-alt text-primary"></i> 010-1234-5678</span>
+                        <span class="opacity-50 text-[10px]">|</span>
+                        <span class="flex items-center gap-1.5"><i class="fas fa-clock text-primary"></i> 10:00 - 20:00 (연중무휴)</span>
                     </div>
 
-                    <!-- 4. 이벤트 알림받기 버튼 복구 -->
-                    <button onclick="openModal('알림받기', '본점/평리점 이벤트 및 혜택 알림이 설정되었습니다.')" class="bg-primary hover:bg-[#b80066] text-white text-[13px] font-bold px-5 py-2.5 rounded-full mb-5 shadow-lg transition flex items-center justify-center gap-2 border border-white/20 active:scale-95">
+                    <!-- 4. 이벤트 알림받기 버튼 -->
+                    <button onclick="openModal('알림받기', '본점/평리점 이벤트 및 혜택 알림이 설정되었습니다.')" class="bg-primary hover:bg-[#b80066] text-white text-[13px] font-bold px-5 py-2.5 rounded-full mb-5 shadow-lg transition flex items-center justify-center gap-2 border border-white/30 active:scale-95">
                         <i class="fas fa-bell text-yellow-300"></i> 본점/평리점 이벤트알림받기
                     </button>
 
-                    <!-- 5. 소개글 (Quote Box) 복구 -->
-                    <div class="bg-black/40 rounded-2xl p-4 text-[13px] text-white/95 leading-relaxed backdrop-blur-sm border border-white/10 shadow-inner w-full text-center">
+                    <!-- 5. 소개글 (Quote Box) -->
+                    <div class="bg-white/70 rounded-2xl p-4 text-[13px] text-gray-900 font-bold leading-relaxed backdrop-blur-sm border border-white/50 shadow-md w-full text-center">
                         "손끝의 아름다움과 최신 스마트폰의 만남.<br>
                         최고의 네일아트와 전국 최저가 휴대폰 시세로<br>
                         고객님께 진짜 이득이 되는 혜택만 선별하여<br>
@@ -215,10 +216,10 @@
             <!-- 탭 콘텐츠 영역 -->
             <div class="p-5 space-y-6">
                 
-                <!-- 탭 1: 프로필 (디자인 오류 방지 적용) -->
+                <!-- 탭 1: 프로필 -->
                 <div id="tab-profile" class="tab-content active">
                     
-                    <!-- 1. 3만네일 본점 그룹 (선생님 8명 업데이트) -->
+                    <!-- 1. 3만네일 본점 그룹 -->
                     <div class="mb-6">
                         <h3 class="text-[16px] font-bold text-gray-800 mb-3 px-1 flex items-center gap-2">
                             <span class="text-primary"><i class="fas fa-store"></i></span> 3만네일 본점 (진천/평리)
@@ -228,10 +229,10 @@
                             <!-- 원장🩷 -->
                             <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center h-full justify-between">
                                 <div class="w-full">
-                                    <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto">
-                                    <div class="text-[10px] text-gray-500 mb-0.5">휴무: 일</div>
+                                    <img src="27127.jpg" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto" style="object-position: top right;">
+                                    <div class="text-[10px] text-gray-500 mb-0.5">일 휴무</div>
                                     <div class="font-bold text-gray-800 text-[14px] mb-1">원장 🩷</div>
-                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">진천[화.목.토]<br>평리[월.수.금]</div>
+                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">진천점 [화.목.토]<br>평리점 [월.수.금]</div>
                                 </div>
                                 <a href="https://www.daangn.com/kr/local-profile/mxjgwgvp5uyc/?referrer=share" target="_blank" rel="noopener noreferrer" class="w-full bg-pink-50 text-primary py-1.5 rounded-lg text-xs font-bold hover:bg-pink-100 transition block no-underline mt-auto">예약하기</a>
                             </div>
@@ -239,10 +240,10 @@
                             <!-- 지원쌤💜 -->
                             <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center h-full justify-between">
                                 <div class="w-full">
-                                    <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto">
-                                    <div class="text-[10px] text-gray-500 mb-0.5">휴무: 일</div>
+                                    <img src="27127.jpg" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto" style="object-position: center 20%;">
+                                    <div class="text-[10px] text-gray-500 mb-0.5">일 휴무</div>
                                     <div class="font-bold text-gray-800 text-[14px] mb-1">지원쌤 💜</div>
-                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">맞춤 꼼꼼 섬세 관리<br>유지력 최공😊</div>
+                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">맞춤 꼼꼼 섬세 관리 /<br>유지력 최공😊</div>
                                 </div>
                                 <a href="https://www.daangn.com/kr/local-profile/mxjgwgvp5uyc/?referrer=share" target="_blank" rel="noopener noreferrer" class="w-full bg-pink-50 text-primary py-1.5 rounded-lg text-xs font-bold hover:bg-pink-100 transition block no-underline mt-auto">예약하기</a>
                             </div>
@@ -250,10 +251,10 @@
                             <!-- 지은쌤💚 -->
                             <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center h-full justify-between">
                                 <div class="w-full">
-                                    <img src="https://images.unsplash.com/photo-1519014816548-bf5fe059698b?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto">
-                                    <div class="text-[10px] text-gray-500 mb-0.5">휴무: 일,월</div>
+                                    <img src="27127.jpg" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto" style="object-position: center 30%;">
+                                    <div class="text-[10px] text-gray-500 mb-0.5">일,월 휴무</div>
                                     <div class="font-bold text-gray-800 text-[14px] mb-1">지은쌤 💚</div>
-                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">손원톤 2만원 행사중<br>깔끔한 컬러링</div>
+                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">9/10 까지 손원톤 2만원 행사 중 입니다!! 깔끔한 컬러링으로 예...</div>
                                 </div>
                                 <a href="https://www.daangn.com/kr/local-profile/mxjgwgvp5uyc/?referrer=share" target="_blank" rel="noopener noreferrer" class="w-full bg-pink-50 text-primary py-1.5 rounded-lg text-xs font-bold hover:bg-pink-100 transition block no-underline mt-auto">예약하기</a>
                             </div>
@@ -261,10 +262,10 @@
                             <!-- 혜지쌤🧡 -->
                             <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center h-full justify-between">
                                 <div class="w-full">
-                                    <img src="https://images.unsplash.com/photo-1516975080661-460ce6ea9825?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto">
-                                    <div class="text-[10px] text-gray-500 mb-0.5">휴무: 일,월,토</div>
+                                    <img src="27127.jpg" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto" style="object-position: center 45%;">
+                                    <div class="text-[10px] text-gray-500 mb-0.5">일,월,토 휴무</div>
                                     <div class="font-bold text-gray-800 text-[14px] mb-1">혜지쌤 🧡</div>
-                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">손원톤 2만원 행사중<br>휴가 복귀 경력자쌤</div>
+                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">9/10까지손원톤2만원행사중/잠시 휴가보내고 오신 경력자쌤/...</div>
                                 </div>
                                 <a href="https://www.daangn.com/kr/local-profile/mxjgwgvp5uyc/?referrer=share" target="_blank" rel="noopener noreferrer" class="w-full bg-pink-50 text-primary py-1.5 rounded-lg text-xs font-bold hover:bg-pink-100 transition block no-underline mt-auto">예약하기</a>
                             </div>
@@ -272,10 +273,10 @@
                             <!-- 선민쌤🍔 -->
                             <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center h-full justify-between">
                                 <div class="w-full">
-                                    <img src="https://images.unsplash.com/photo-1595959183082-7b570b7e08e2?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto">
-                                    <div class="text-[10px] text-gray-500 mb-0.5">휴무: 토,일</div>
+                                    <img src="27127.jpg" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto" style="object-position: center 60%;">
+                                    <div class="text-[10px] text-gray-500 mb-0.5">토,일 휴무</div>
                                     <div class="font-bold text-gray-800 text-[14px] mb-1">선민쌤 🍔</div>
-                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">손원톤 2만원 행사중<br>깔끔 꼼꼼하게 💖</div>
+                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">9/10까지손원톤2만원행사중!! 깔끔하고 꼼꼼하게 해드릴게용💖</div>
                                 </div>
                                 <a href="https://www.daangn.com/kr/local-profile/mxjgwgvp5uyc/?referrer=share" target="_blank" rel="noopener noreferrer" class="w-full bg-pink-50 text-primary py-1.5 rounded-lg text-xs font-bold hover:bg-pink-100 transition block no-underline mt-auto">예약하기</a>
                             </div>
@@ -283,10 +284,10 @@
                             <!-- 로안쌤🥰 -->
                             <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center h-full justify-between">
                                 <div class="w-full">
-                                    <img src="https://images.unsplash.com/photo-1621592484082-2d05b1290d7a?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto">
-                                    <div class="text-[10px] text-gray-500 mb-0.5">휴무: 토,일</div>
+                                    <img src="27127.jpg" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto" style="object-position: center 70%;">
+                                    <div class="text-[10px] text-gray-500 mb-0.5">토,일 휴무</div>
                                     <div class="font-bold text-gray-800 text-[14px] mb-1">로안쌤 🥰</div>
-                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">손원톤 2만원 행사중<br>편안하게 시술받으세용</div>
+                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">9월10일까지 손원톤2만원행사중/고객님께서 편안하게 시술받...</div>
                                 </div>
                                 <a href="https://www.daangn.com/kr/local-profile/mxjgwgvp5uyc/?referrer=share" target="_blank" rel="noopener noreferrer" class="w-full bg-pink-50 text-primary py-1.5 rounded-lg text-xs font-bold hover:bg-pink-100 transition block no-underline mt-auto">예약하기</a>
                             </div>
@@ -294,10 +295,10 @@
                             <!-- 성연쌤🐱 -->
                             <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center h-full justify-between">
                                 <div class="w-full">
-                                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto">
-                                    <div class="text-[10px] text-gray-500 mb-0.5">휴무: 수,목</div>
+                                    <img src="27127.jpg" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto" style="object-position: center 80%;">
+                                    <div class="text-[10px] text-gray-500 mb-0.5">수,목 휴무</div>
                                     <div class="font-bold text-gray-800 text-[14px] mb-1">성연쌤 🐱</div>
-                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">케어 깔끔<br>맞춤관리 전문</div>
+                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">케어 깔끔 맞춤관리</div>
                                 </div>
                                 <a href="https://www.daangn.com/kr/local-profile/mxjgwgvp5uyc/?referrer=share" target="_blank" rel="noopener noreferrer" class="w-full bg-pink-50 text-primary py-1.5 rounded-lg text-xs font-bold hover:bg-pink-100 transition block no-underline mt-auto">예약하기</a>
                             </div>
@@ -305,17 +306,17 @@
                             <!-- 도경쌤💛 -->
                             <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center h-full justify-between">
                                 <div class="w-full">
-                                    <img src="https://images.unsplash.com/photo-1594247547514-416174a7428e?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto">
-                                    <div class="text-[10px] text-gray-500 mb-0.5">휴무: 일</div>
+                                    <img src="27127.jpg" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto" style="object-position: center bottom;">
+                                    <div class="text-[10px] text-gray-500 mb-0.5">일 휴무</div>
                                     <div class="font-bold text-gray-800 text-[14px] mb-1">도경쌤 💛</div>
-                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">손원톤 2만원 행사중<br>휴가 복귀 경력자쌤</div>
+                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">9/10까지손원톤2만원행사중/잠시 휴가보내고 오신 경력자쌤/...</div>
                                 </div>
                                 <a href="https://www.daangn.com/kr/local-profile/mxjgwgvp5uyc/?referrer=share" target="_blank" rel="noopener noreferrer" class="w-full bg-pink-50 text-primary py-1.5 rounded-lg text-xs font-bold hover:bg-pink-100 transition block no-underline mt-auto">예약하기</a>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 2. 3만네일 평리점 그룹 (선생님 3명 업데이트) -->
+                    <!-- 2. 3만네일 평리점 그룹 -->
                     <div class="mb-6">
                         <h3 class="text-[16px] font-bold text-gray-800 mb-3 px-1 flex items-center gap-2">
                             <span class="text-primary"><i class="fas fa-store"></i></span> 3만네일 평리점
@@ -324,10 +325,10 @@
                             <!-- 원장🩷 -->
                             <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center h-full justify-between">
                                 <div class="w-full">
-                                    <img src="https://images.unsplash.com/photo-1587823528224-b52eec8328c6?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto">
-                                    <div class="text-[10px] text-gray-500 mb-0.5">휴무: 화,목,토,일</div>
+                                    <img src="27129.jpg" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto" style="object-position: center 30%;">
+                                    <div class="text-[10px] text-gray-500 mb-0.5">화,토,일,목 휴무</div>
                                     <div class="font-bold text-gray-800 text-[14px] mb-1">원장 🩷</div>
-                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">지겹지 않은 빠른 시술<br>유지력 굿🩷</div>
+                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">지겹지 않게 빠른 시술시간/유지력굿🩷</div>
                                 </div>
                                 <a href="https://www.daangn.com/kr/local-profile/v2zi5n3qrbms/?referrer=share" target="_blank" rel="noopener noreferrer" class="w-full bg-pink-50 text-primary py-1.5 rounded-lg text-xs font-bold hover:bg-pink-100 transition block no-underline mt-auto">예약하기</a>
                             </div>
@@ -335,10 +336,10 @@
                             <!-- 민주쌤🐰 -->
                             <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center h-full justify-between">
                                 <div class="w-full">
-                                    <img src="https://images.unsplash.com/photo-1610428588827-020c02e1c9df?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto">
-                                    <div class="text-[10px] text-gray-500 mb-0.5">휴무: 일,월</div>
+                                    <img src="27129.jpg" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto" style="object-position: center 55%;">
+                                    <div class="text-[10px] text-gray-500 mb-0.5">일,월 휴무</div>
                                     <div class="font-bold text-gray-800 text-[14px] mb-1">민주쌤 🐰</div>
-                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">섬세한 고객 맞춤 시술<br>믿을 수 있는 유지력★</div>
+                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">섬세한 고객 맞춤 시술🐰!!! 믿을 수 있는 유지력★ 주말 예약 가...</div>
                                 </div>
                                 <a href="https://www.daangn.com/kr/local-profile/v2zi5n3qrbms/?referrer=share" target="_blank" rel="noopener noreferrer" class="w-full bg-pink-50 text-primary py-1.5 rounded-lg text-xs font-bold hover:bg-pink-100 transition block no-underline mt-auto">예약하기</a>
                             </div>
@@ -346,38 +347,70 @@
                             <!-- 현지쌤🐶 -->
                             <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center h-full justify-between">
                                 <div class="w-full">
-                                    <img src="https://images.unsplash.com/photo-1506546342898-dff7137f8f94?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto">
-                                    <div class="text-[10px] text-gray-500 mb-0.5">휴무: 화,수</div>
+                                    <img src="27129.jpg" class="w-16 h-16 rounded-full object-cover border-2 border-pink-50 mb-2 mx-auto" style="object-position: center 80%;">
+                                    <div class="text-[10px] text-gray-500 mb-0.5">화,수 휴무</div>
                                     <div class="font-bold text-gray-800 text-[14px] mb-1">현지쌤 🐶</div>
-                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">1:1 맞춤 디자인<br>꼼꼼케어🤍 원톤 환영</div>
+                                    <div class="text-[10px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">주말, 당일 예약가능🤍 1:1 맞춤 디자인🤍 꼼꼼케어🤍 원톤 환...</div>
                                 </div>
                                 <a href="https://www.daangn.com/kr/local-profile/v2zi5n3qrbms/?referrer=share" target="_blank" rel="noopener noreferrer" class="w-full bg-pink-50 text-primary py-1.5 rounded-lg text-xs font-bold hover:bg-pink-100 transition block no-underline mt-auto">예약하기</a>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 3. 폰값연구소 그룹 -->
+                    <!-- 3. 폰값연구소 그룹 (총 4명) -->
                     <div class="mb-6">
                         <h3 class="text-[16px] font-bold text-gray-800 mb-3 px-1 flex items-center gap-2">
                             <span class="text-blue-600"><i class="fas fa-mobile-alt"></i></span> 폰값연구소 컨설턴트
                         </h3>
                         <div class="grid grid-cols-2 gap-3">
+                            <!-- 본점 이사 조현철 -->
                             <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center h-full justify-between">
                                 <div class="w-full">
-                                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-full object-cover border-2 border-blue-50 mb-2 mx-auto">
-                                    <div class="text-[11px] text-blue-600 font-bold mb-0.5">본점 수석 과장</div>
-                                    <div class="font-bold text-gray-800 text-[14px] sm:text-[15px] mb-1">강태훈</div>
+                                    <div class="w-16 h-16 rounded-full bg-blue-50 border-2 border-blue-100 flex justify-center items-center text-blue-300 text-3xl mb-2 mx-auto">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                    <div class="text-[11px] text-blue-600 font-bold mb-0.5">본점 이사</div>
+                                    <div class="font-bold text-gray-800 text-[14px] sm:text-[15px] mb-1">조현철</div>
                                     <div class="text-[10px] sm:text-[11px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">3사 꼼꼼 비교<br>최저가 요금 설계</div>
                                 </div>
                                 <a href="https://pf.kakao.com/_xoaeQn" target="_blank" rel="noopener noreferrer" class="w-full bg-blue-50 text-blue-600 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-100 transition block no-underline mt-auto">상담하기</a>
                             </div>
 
+                            <!-- 본점 주임 고두현 -->
                             <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center h-full justify-between">
                                 <div class="w-full">
-                                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=150&auto=format&fit=crop" class="w-16 h-16 rounded-full object-cover border-2 border-blue-50 mb-2 mx-auto">
+                                    <div class="w-16 h-16 rounded-full bg-blue-50 border-2 border-blue-100 flex justify-center items-center text-blue-300 text-3xl mb-2 mx-auto">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                    <div class="text-[11px] text-blue-600 font-bold mb-0.5">본점 주임</div>
+                                    <div class="font-bold text-gray-800 text-[14px] sm:text-[15px] mb-1">고두현</div>
+                                    <div class="text-[10px] sm:text-[11px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">친절 맞춤 상담<br>결합 할인 전문</div>
+                                </div>
+                                <a href="https://pf.kakao.com/_xoaeQn" target="_blank" rel="noopener noreferrer" class="w-full bg-blue-50 text-blue-600 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-100 transition block no-underline mt-auto">상담하기</a>
+                            </div>
+
+                            <!-- 평리점 점장 백태현 -->
+                            <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center h-full justify-between">
+                                <div class="w-full">
+                                    <div class="w-16 h-16 rounded-full bg-blue-50 border-2 border-blue-100 flex justify-center items-center text-blue-300 text-3xl mb-2 mx-auto">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
                                     <div class="text-[11px] text-blue-600 font-bold mb-0.5">평리점 점장</div>
-                                    <div class="font-bold text-gray-800 text-[14px] sm:text-[15px] mb-1">정현우</div>
+                                    <div class="font-bold text-gray-800 text-[14px] sm:text-[15px] mb-1">백태현</div>
                                     <div class="text-[10px] sm:text-[11px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">인터넷+TV 가입<br>효도폰/학생폰 전문</div>
+                                </div>
+                                <a href="https://pf.kakao.com/_LRMxgn" target="_blank" rel="noopener noreferrer" class="w-full bg-blue-50 text-blue-600 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-100 transition block no-underline mt-auto">상담하기</a>
+                            </div>
+
+                            <!-- 평리점 주임 김용철 -->
+                            <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center h-full justify-between">
+                                <div class="w-full">
+                                    <div class="w-16 h-16 rounded-full bg-blue-50 border-2 border-blue-100 flex justify-center items-center text-blue-300 text-3xl mb-2 mx-auto">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                    <div class="text-[11px] text-blue-600 font-bold mb-0.5">평리점 주임</div>
+                                    <div class="font-bold text-gray-800 text-[14px] sm:text-[15px] mb-1">김용철</div>
+                                    <div class="text-[10px] sm:text-[11px] text-gray-500 mb-3 leading-tight break-keep min-h-[28px] flex items-center justify-center">고객 맞춤 컨설팅<br>투명한 가격 안내</div>
                                 </div>
                                 <a href="https://pf.kakao.com/_LRMxgn" target="_blank" rel="noopener noreferrer" class="w-full bg-blue-50 text-blue-600 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-100 transition block no-underline mt-auto">상담하기</a>
                             </div>
@@ -385,7 +418,7 @@
                     </div>
                 </div>
 
-                <!-- 탭 2: 네일/가격 (텍스트 및 이미지 교체 완료) -->
+                <!-- 탭 2: 네일/가격 -->
                 <div id="tab-nail" class="tab-content">
                     
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 mb-6">
@@ -398,7 +431,7 @@
                                 </div>
                                 <div class="font-bold text-gray-900 text-lg">30,000원</div>
                             </div>
-                            <div class="text-[13px] text-gray-500 leading-snug">
+                            <div class="text-[13px] text-gray-500 leading-snug break-keep">
                                 기본젤/아트/페디/뷰러펌/발각질케어 어떤시술이든 자샵아트는 모두 3만원입니다.
                             </div>
                         </div>
@@ -409,7 +442,7 @@
                                 <div class="font-bold text-gray-800 text-[16px]">제거</div>
                                 <div class="font-bold text-gray-900 text-lg">10,000원</div>
                             </div>
-                            <div class="text-[13px] text-gray-500 leading-snug">
+                            <div class="text-[13px] text-gray-500 leading-snug break-keep">
                                 타샵제거 또는 자샵시술하셨더라도 "제거만" 하고 가실경우 제거비 있어요
                             </div>
                         </div>
@@ -420,7 +453,7 @@
                                 <div class="font-bold text-gray-800 text-[16px]">추가 제거비</div>
                                 <div class="font-bold text-gray-900 text-lg">10,000원</div>
                             </div>
-                            <div class="text-[13px] text-gray-500 leading-snug">
+                            <div class="text-[13px] text-gray-500 leading-snug break-keep">
                                 타샵 연장 또는 2cm 이상 등의 긴 손톱 제거 시술 시 추가 비용이 발생됩니다
                             </div>
                         </div>
@@ -551,7 +584,7 @@
         // PWA Manifest 동적 생성 (독립 앱 설치용)
         const iconUrl = new URL("27081.jpg", window.location.href).href;
         const manifestData = {
-            "id": "/3man-nail-phone-app-v7/", 
+            "id": "/3man-nail-phone-app-v11/", 
             "name": "3만네일 & 폰값연구소",
             "short_name": "3만네일&폰",
             "start_url": window.location.origin + window.location.pathname, 
@@ -568,8 +601,8 @@
         const manifestURL = URL.createObjectURL(blob);
         document.head.insertAdjacentHTML('beforeend', `<link rel="manifest" href="${manifestURL}">`);
 
-        // 탭 기능
-        function switchTab(tabId) {
+        // 탭 기능 (히스토리 API 연동)
+        function switchTab(tabId, pushHistory = true) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => {
                 el.classList.remove('text-primary', 'border-primary', 'font-bold');
@@ -580,6 +613,11 @@
             if(activeBtn) {
                 activeBtn.classList.remove('border-transparent', 'text-gray-400');
                 activeBtn.classList.add('text-primary', 'border-primary', 'font-bold');
+            }
+
+            // 탭 클릭 시 주소창 방문기록(History)에 탭 아이디 추가
+            if (pushHistory) {
+                history.pushState({ tab: tabId }, null, "#" + tabId);
             }
         }
 
@@ -685,14 +723,36 @@
             }
         }
 
-        // 스마트폰 물리 뒤로가기(◁) 감지 센서
+        // 스마트폰 물리 뒤로가기(◁) 감지 센서 (팝업 및 탭 이동 제어)
         window.addEventListener("popstate", function(event) {
+            // 우선 팝업이 떠있으면 팝업부터 닫기
             if (activeModal === 'gallery') {
                 activeModal = null;
                 _closeGalleryUI(); 
             } else if (activeModal === 'alert') {
                 activeModal = null;
                 _closeAlertUI();
+            } else {
+                // 팝업이 없을 때 뒤로가기를 누르면 이전 탭 화면으로 이동
+                if (event.state && event.state.tab) {
+                    switchTab(event.state.tab, false);
+                } else {
+                    // 기본 첫 화면(프로필 탭)으로 강제 복귀
+                    switchTab('tab-profile', false);
+                }
+            }
+        });
+
+        // 페이지 최초 로딩 시 기본 탭 방문기록 저장
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!window.location.hash || window.location.hash === "#tab-profile") {
+                history.replaceState({ tab: 'tab-profile' }, null, "#tab-profile");
+            } else {
+                // 특정 탭 해시로 새로고침 된 경우 해당 탭 활성화
+                const hashTab = window.location.hash.replace('#', '');
+                if(document.getElementById(hashTab)) {
+                    switchTab(hashTab, false);
+                }
             }
         });
 
