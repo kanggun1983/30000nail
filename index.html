@@ -376,12 +376,12 @@
             </div> 
         </div>
 
-        <!-- 하단 고정 바 (실제 링크 연결 적용) -->
+        <!-- 하단 고정 바 (실제 링크 연결 적용, target="_blank" 제거하여 앱 내에서 자연스럽게 전환되도록 수정) -->
         <div class="absolute bottom-0 left-0 w-full bg-white border-t border-gray-200 px-2 py-3 pb-6 sm:pb-4 shadow-[0_-10px_20px_rgba(0,0,0,0.05)] z-40 pwa-safe-bottom">
             <div class="flex justify-between items-center max-w-sm mx-auto gap-1">
                 
                 <!-- 1. 본점 당근 -->
-                <a href="https://www.daangn.com/kr/local-profile/mxjgwgvp5uyc/?referrer=share" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-1/4 transition group">
+                <a href="https://www.daangn.com/kr/local-profile/mxjgwgvp5uyc/?referrer=share" class="flex flex-col items-center w-1/4 transition group">
                     <div class="w-[46px] h-[46px] rounded-2xl bg-white border border-gray-200 shadow-sm flex justify-center items-center text-[#ff8a3d] group-hover:bg-orange-50 transition mb-1">
                         <i class="fas fa-carrot text-xl"></i>
                     </div>
@@ -390,7 +390,7 @@
                 </a>
                 
                 <!-- 2. 평리점 당근 -->
-                <a href="https://www.daangn.com/kr/local-profile/v2zi5n3qrbms/?referrer=share" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-1/4 transition group">
+                <a href="https://www.daangn.com/kr/local-profile/v2zi5n3qrbms/?referrer=share" class="flex flex-col items-center w-1/4 transition group">
                     <div class="w-[46px] h-[46px] rounded-2xl bg-white border border-gray-200 shadow-sm flex justify-center items-center text-[#ff8a3d] group-hover:bg-orange-50 transition mb-1">
                         <i class="fas fa-carrot text-xl"></i>
                     </div>
@@ -398,8 +398,8 @@
                     <span class="text-[11px] font-bold text-gray-700 leading-tight">평리점 당근</span>
                 </a>
                 
-                <!-- 3. 폰값연구소 본점 카카오채널 -->
-                <a href="http://pf.kakao.com/_xoaeQn" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-1/4 transition group">
+                <!-- 3. 폰값연구소 본점 카카오채널 (보안을 위해 https 적용) -->
+                <a href="https://pf.kakao.com/_xoaeQn" class="flex flex-col items-center w-1/4 transition group">
                     <div class="w-[46px] h-[46px] rounded-2xl bg-[#FEE500] border border-[#FEE500] shadow-sm flex justify-center items-center text-[#3A1D1D] group-hover:bg-[#FDD800] transition mb-1">
                         <i class="fas fa-comment text-xl"></i>
                     </div>
@@ -407,8 +407,8 @@
                     <span class="text-[11px] font-bold text-gray-700 leading-tight">본점 채널</span>
                 </a>
 
-                <!-- 4. 폰값연구소 평리점 카카오채널 -->
-                <a href="http://pf.kakao.com/_LRMxgn" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-1/4 transition group">
+                <!-- 4. 폰값연구소 평리점 카카오채널 (보안을 위해 https 적용) -->
+                <a href="https://pf.kakao.com/_LRMxgn" class="flex flex-col items-center w-1/4 transition group">
                     <div class="w-[46px] h-[46px] rounded-2xl bg-[#FEE500] border border-[#FEE500] shadow-sm flex justify-center items-center text-[#3A1D1D] group-hover:bg-[#FDD800] transition mb-1">
                         <i class="fas fa-comment text-xl"></i>
                     </div>
@@ -443,17 +443,15 @@
     </div>
 
     <script>
-        // --- 1. PWA Manifest 동적 생성 ---
-        // 브라우저에서 '홈 화면에 추가' 기능이 작동하도록 manifest 데이터를 주입합니다.
-        // Blob URL 사용 시 이미지 경로 이탈을 막기 위해 절대 경로(Absolute URL)로 변환합니다.
+        // --- 1. PWA Manifest 동적 생성 (절대 경로 적용으로 아이콘 오류 해결) ---
         const iconUrl = new URL("27081.jpg", window.location.href).href;
         
         const manifestData = {
-            "id": "/3man-nail-phone-app-unique-id/", // 기존 디지털 명함과 충돌을 방지하는 고유 식별자
+            "id": "/3man-nail-phone-app-unique-id/", 
             "name": "3만네일 & 폰값연구소",
             "short_name": "3만네일&폰",
-            "start_url": window.location.origin + window.location.pathname, // 쿼리 파라미터 충돌 방지
-            "scope": window.location.pathname, // 앱 실행 범위 제한
+            "start_url": window.location.origin + window.location.pathname, 
+            "scope": window.location.pathname, 
             "display": "standalone", 
             "background_color": "#ffffff",
             "theme_color": "#ffffff",
@@ -477,7 +475,7 @@
         document.head.insertAdjacentHTML('beforeend', `<link rel="manifest" href="${manifestURL}">`);
 
 
-        // --- 2. 기존 동작 스크립트 ---
+        // --- 2. 기존 탭 및 모달 동작 스크립트 ---
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => {
