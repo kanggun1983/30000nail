@@ -9,7 +9,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="3만네일&폰">
-    <!-- 아이폰 홈 화면 아이콘 (요청하신 이미지로 변경) -->
+    <!-- 아이폰 홈 화면 아이콘 및 안드로이드 기본 아이콘 -->
+    <link rel="icon" href="27081.jpg" type="image/jpeg">
     <link rel="apple-touch-icon" href="27081.jpg">
     
     <!-- 테마 컬러 설정 (안드로이드 상태바 색상) -->
@@ -435,7 +436,9 @@
     <script>
         // --- 1. PWA Manifest 동적 생성 ---
         // 브라우저에서 '홈 화면에 추가' 기능이 작동하도록 manifest 데이터를 주입합니다.
-        // 요청하신 이미지(27081.jpg)를 아이콘으로 설정했습니다.
+        // Blob URL 사용 시 이미지 경로 이탈을 막기 위해 절대 경로(Absolute URL)로 변환합니다.
+        const iconUrl = new URL("27081.jpg", window.location.href).href;
+        
         const manifestData = {
             "name": "3만네일 & 폰값연구소",
             "short_name": "3만네일&폰",
@@ -445,13 +448,13 @@
             "theme_color": "#ffffff",
             "icons": [
                 {
-                    "src": "27081.jpg",
+                    "src": iconUrl,
                     "sizes": "192x192",
                     "type": "image/jpeg",
                     "purpose": "any maskable"
                 },
                 {
-                    "src": "27081.jpg",
+                    "src": iconUrl,
                     "sizes": "512x512",
                     "type": "image/jpeg",
                     "purpose": "any maskable"
@@ -540,16 +543,6 @@
             document.body.removeChild(dummy);
             openModal('공유하기', '프로필 주소가 복사되었습니다.\n원하는 곳에 붙여넣기 하세요!');
         }
-
-        // 앱 밖(브라우저)에서 열렸을 때 설치 유도 안내 (최초 1회)
-        window.addEventListener('load', () => {
-            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-            if (!isStandalone) {
-                setTimeout(() => {
-                    openModal('앱으로 설치하기', '스마트폰 브라우저 설정에서 [홈 화면에 추가]를 선택하시면\n전체화면 앱처럼 사용하실 수 있습니다!');
-                }, 1000);
-            }
-        });
     </script>
 </body>
 </html>
